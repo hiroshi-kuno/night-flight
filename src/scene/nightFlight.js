@@ -368,7 +368,15 @@ export function createNightFlight(container, { imageUrl, onReady, onTelemetry, l
   }
 
   // --- 写真を読み込んで地面・光の粒・雲を作る ---------------------------------
+  let disposed = false
+  let groundTexture = null
   new THREE.TextureLoader().load(imageUrl, (tex) => {
+    // 切り替え前の画像が遅れて届いた場合は、古いシーンを再構築せず破棄する。
+    if (disposed) {
+      tex.dispose()
+      return
+    }
+    groundTexture = tex
     tex.colorSpace = THREE.SRGBColorSpace
     tex.anisotropy = renderer.capabilities.getMaxAnisotropy() // 斜めから見てもぼやけにくく
     tex.generateMipmaps = true // 雲の照り返しでぼかした写真を使うため
@@ -558,6 +566,7 @@ export function createNightFlight(container, { imageUrl, onReady, onTelemetry, l
       state.lookTarget.set(x, y)
     },
     dispose() {
+      disposed = true
       cancelAnimationFrame(raf)
       ro.disconnect()
       window.removeEventListener('keydown', onKey)
@@ -566,6 +575,7 @@ export function createNightFlight(container, { imageUrl, onReady, onTelemetry, l
         o.geometry?.dispose()
         o.material?.dispose()
       })
+      groundTexture?.dispose()
       composer.dispose()
       renderer.dispose()
       renderer.domElement.remove()

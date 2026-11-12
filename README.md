@@ -1,12 +1,47 @@
-# React + Vite
+# Night Flight
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ISSの夜景写真を地面に敷き、飛行機の窓から見下ろす景色を描画するアプリ。
+React・Three.js・Viteを使用する。
 
-Currently, two official plugins are available:
+## 開発・ビルド
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```sh
+npm install
+npm run dev
+npm run lint
+npm run build
+npm run preview
+```
 
-## Expanding the ESLint configuration
+公開パスは `vite.config.js` の `base: '/night-flight/'`、ビルド出力先は `docs/`。
+`docs/` は生成物なので、修正はソース側で行ってから再ビルドする。
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ロケーション画像の追加・切り替え
+
+画像は `src/assets/locations/<ロケーションID>/` に配置し、
+`src/data/locations.js` でimportして `LOCATIONS` に登録する。
+画像URLはViteが公開パスに合わせて生成し、ビルド時に `docs/assets/` に出力する。
+
+```js
+import londonImageUrl from '@/assets/locations/london/ISS073-E-659216.jpeg'
+import nextImageUrl from '@/assets/locations/next-location/night.jpeg'
+
+export const LOCATIONS = {
+  london: {
+    name: 'London',
+    imageUrl: londonImageUrl,
+    imageId: 'ISS073-E-659216',
+  },
+  'next-location': {
+    name: 'Next Location',
+    imageUrl: nextImageUrl,
+    imageId: 'PHOTO-ID',
+  },
+}
+
+export const DEFAULT_LOCATION_ID = 'london'
+```
+
+初期表示は `DEFAULT_LOCATION_ID` で選ぶ。
+`App` の `locationId` プロパティでも選択でき、値を変更すると画像とシーンを作り直す。
+タイトル・写真ID・読み込み表示も選択したロケーションに連動する。
