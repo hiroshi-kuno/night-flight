@@ -1,0 +1,48 @@
+// ---------------------------------------------------------------------------
+// デザイントークン
+//   ビルド時に決まる値はSass変数で定義する。テーマ切り替えなどで実行時に
+//   変更する可能性のある値は、global.scss でCSSカスタムプロパティとしても公開する。
+// ---------------------------------------------------------------------------
+
+// 色
+$color-black: #000;
+$color-ink: rgb(240 228 210); // すべての文字に使う、機内照明を思わせる暖色の白
+
+$text-strong: rgba($color-ink, 0.8);
+$text-default: rgba($color-ink, 0.55);
+$text-muted: rgba($color-ink, 0.35);
+
+// 書体・文字サイズ・字間
+$font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+$font-size-xs: 16px;
+$font-size-sm: 18px;
+$font-size-md: 20px;
+
+$tracking-tight: 0.08em;
+$tracking-default: 0.18em;
+$tracking-wide: 0.3em;
+
+// 余白
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 16px;
+$space-4: 20px;
+$space-5: 28px;
+
+// アニメーション
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$duration-fade: 2.5s;
+
+// レイヤーの重なり順（下から上）
+$z-index: (
+  viewport: 0,
+  window: 10,
+  hud: 20,
+  loader: 30,
+);
+
+// 画面幅の切り替え基準
+$breakpoints: (
+  sm: 600px,
+  md: 900px,
+);

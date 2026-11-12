@@ -1,0 +1,45 @@
+@use 'sass:map';
+@use 'tokens' as *;
+
+// 要素を画面全体に重ねる
+@mixin fill {
+  position: absolute;
+  inset: 0;
+}
+
+// $z-index のマップから重なり順を指定する。使用例: @include layer(hud);
+@mixin layer($name) {
+  @if not map.has-key($z-index, $name) {
+    @error "Unknown layer `#{$name}`. Available: #{map.keys($z-index)}";
+  }
+  z-index: map.get($z-index, $name);
+}
+
+// ポインター操作を透過する装飾用の重ね合わせ
+@mixin overlay($name) {
+  @include fill;
+  @include layer($name);
+  pointer-events: none;
+}
+
+// 計器風のラベル文字
+@mixin label($size: $font-size-sm, $tracking: $tracking-default) {
+  font-family: $font-mono;
+  font-size: $size;
+  letter-spacing: $tracking;
+  text-transform: uppercase;
+}
+
+// 指定した画面幅以上に適用するメディアクエリ。使用例: @include up(md) { ... }
+@mixin up($bp) {
+  @media (min-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}
+
+// 指定した画面幅未満に適用するメディアクエリ。使用例: @include down(sm) { ... }
+@mixin down($bp) {
+  @media (max-width: (map.get($breakpoints, $bp) - 1px)) {
+    @content;
+  }
+}

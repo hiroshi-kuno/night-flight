@@ -1,0 +1,16 @@
+@use '@/styles' as *;
+
+// ブロック: loader
+.loader {
+  @include overlay(loader);
+  @include label($font-size-md, $tracking-wide);
+  display: grid;
+  place-items: center;
+  color: $text-default;
+  background: $color-black;
+  transition: opacity $duration-fade $ease-out;
+
+  &--hidden {
+    opacity: 0;
+  }
+}

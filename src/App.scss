@@ -1,0 +1,23 @@
+@use '@/styles' as *;
+
+// ブロック: flight
+.flight {
+  position: fixed;
+  inset: 0;
+  cursor: grab;
+  touch-action: none; // タッチ端末でもポインターイベントでドラッグを制御する
+  user-select: none;
+
+  &--dragging {
+    cursor: grabbing;
+  }
+
+  &__viewport {
+    @include fill;
+    @include layer(viewport);
+
+    canvas {
+      display: block;
+    }
+  }
+}

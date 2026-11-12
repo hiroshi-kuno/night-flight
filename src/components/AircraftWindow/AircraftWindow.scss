@@ -1,0 +1,111 @@
+@use "@/styles" as *;
+
+// 機内の配色: 窓や壁の見た目はここで調整する
+$wall-light: #222;
+$wall-mid: #111;
+$wall-dark: #000;
+$cabin-light: #ffe9c7;
+$bezel-light: #3b3833;
+$bezel-mid: #2a2824;
+$bezel-dark: #141311;
+$pane-edge: #8a8070;
+$reflect-cool: #fff;
+$reflect-warm: #ffd9a8;
+$shadow: #000;
+
+// ブロック: aircraft-window
+.aircraft-window {
+  @include overlay(window);
+
+  // --- グラデーションの色（SVGの <stop> にCSSで指定する）---------------------
+  &__stop {
+    &--wall-light {
+      stop-color: $wall-light;
+    }
+    &--wall-mid {
+      stop-color: $wall-mid;
+    }
+    &--wall-dark {
+      stop-color: $wall-dark;
+    }
+
+    &--cabin-light {
+      stop-color: $cabin-light;
+      stop-opacity: 0.07;
+    }
+
+    &--bezel-light {
+      stop-color: $bezel-light;
+    }
+    &--bezel-mid {
+      stop-color: $bezel-mid;
+    }
+    &--bezel-dark {
+      stop-color: $bezel-dark;
+    }
+
+    &--reflect-cool {
+      stop-color: $reflect-cool;
+      stop-opacity: 0.07;
+    }
+
+    &--reflect-warm {
+      stop-color: $reflect-warm;
+      stop-opacity: 0.035;
+    }
+
+    &--transparent {
+      stop-color: $shadow;
+      stop-opacity: 0;
+    }
+  }
+
+  // --- ガラス（開口部の内側）------------------------------------------------
+  &__depth {
+    fill: none;
+    stroke: $shadow;
+    stroke-opacity: 0.85;
+  }
+
+  &__pane {
+    fill: none;
+    stroke: $pane-edge;
+    stroke-opacity: 0.12;
+    stroke-width: 1.2;
+  }
+
+  &__reflection {
+    fill: url(#aw-reflect);
+  }
+
+  &__breather-hole {
+    fill: $shadow;
+    opacity: 0.7;
+  }
+
+  // --- 窓枠（樹脂製のフレーム）----------------------------------------------
+  &__bezel-surface {
+    fill: url(#aw-bezel);
+  }
+
+  &__bezel-shadow {
+    fill: none;
+    stroke: $shadow;
+    stroke-opacity: 0.6;
+  }
+
+  // --- 機内の壁 -------------------------------------------------------------
+  &__wall-surface {
+    fill: url(#aw-wall);
+  }
+
+  &__wall-light {
+    fill: url(#aw-wall-light);
+  }
+
+  &__wall-shadow {
+    fill: none;
+    stroke: $shadow;
+    stroke-opacity: 0.7;
+  }
+}
