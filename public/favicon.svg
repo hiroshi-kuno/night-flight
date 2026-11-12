@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <title>Night Flight</title>
+  <rect width="256" height="256" fill="#191919" />
+  <path fill="#aaa" d="M63 65h35l71 92V96c0-16-5-22-23-25v-6h51v6c-17 2-20 8-20 25v94h-11L94 96v63c0 17 5 21 22 24v6H65v-6c17-2 21-8 21-24V95c0-14-6-20-23-24Z" />
+</svg>
