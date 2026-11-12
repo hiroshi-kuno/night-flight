@@ -53,19 +53,19 @@ export const LIGHTING = {
     backgroundOffset: 0.04, // 上の判定に足す余裕(雲や霞を拾わないため)
 
     // ▼ 明るさ:粒の明るさ = 元の色 * (boostBase + 明るさ * boostByLuminance)
-    boostBase: 0.45, // どの粒にもかかる基本の倍率
-    boostByLuminance: 0.9, // 明るい粒ほど上乗せされる倍率
+    boostBase: 0.2, // どの粒にもかかる基本の倍率
+    boostByLuminance: 0.2, // 明るい粒ほど上乗せされる倍率
 
     // ▼ 大きさ:粒の大きさ = 画素の間隔 * (sizeBase + 明るさ * sizeByLuminance)
-    sizeBase: 1.0,
-    sizeByLuminance: 2.2,
-    minPixelSize: 1.5, // 画面上での最小サイズ(px)。これより小さい粒は暗くして描く
-    softness: 16, // 粒の輪郭のぼけ具合(大きいほど芯が小さくシャープ)
+    sizeBase: 0.2,
+    sizeByLuminance: 0.1,
+    minPixelSize: 0.1, // 画面上での最小サイズ(px)。これより小さい粒は暗くして描く
+    softness: 1, // 粒の輪郭のぼけ具合(大きいほど芯が小さくシャープ)
 
     // ▼ 高さ(読み込み時に一度だけ使う):明るい所ほど高く浮かせて奥行きを出す
-    heightBase: 0.6, // 地面からの最低の高さ(1 ≒ 33m)
-    heightByLuminance: 14, // 明るさの2乗に掛ける高さ
-    heightJitter: 1.5, // ランダムなばらつき
+    heightBase: 0.3, // 地面からの最低の高さ(1 ≒ 33m)
+    heightByLuminance: 8, // 明るさの2乗に掛ける高さ
+    heightJitter: 1, // ランダムなばらつき
 
     // ▼ またたき:明るさを (1 - depth) 〜 1 の間で揺らす
     twinkle: {
@@ -106,8 +106,13 @@ export const LIGHTING = {
     horizonLift: 1.6, // 地平線の明るさ(霧の色に対する倍率)
     horizonTint: [0.0, 0.004, 0.02], // 地平線に足す色味(RGB。青みの残光)
     zenith: [0.0, 0.0, 0.004], // 真上の空の色(RGB)
-    starDensity: 0.9965, // 星の少なさ(1 に近いほど少ない。0.99 で多め)
-    starBrightness: 0.8, // 星の明るさ
+    starDensity: 0.999, // 星の少なさ(1 に近いほど少ない。0.99 で多め)
+    starBrightness: 0.2, // 星の明るさ
+    twinkle: {
+      depth: 0.08, // 明るさを92〜100%の範囲で揺らす。0で瞬きを止める
+      speedBase: 0.35, // 揺れの基本の速さ（ラジアン/秒）
+      speedRange: 0.45, // 星ごとの速さのばらつき（約8〜18秒で一周期）
+    },
   },
 
   // -------------------------------------------------------------------------
