@@ -216,6 +216,9 @@ const skyFrag = /* GLSLのフラグメントシェーダー */ `
   uniform vec3 uZenith;
   uniform float uStarDensity;
   uniform float uStarBrightness;
+  uniform float uStarTwinkleDepth;
+  uniform float uStarTwinkleSpeedBase;
+  uniform float uStarTwinkleSpeedRange;
   varying vec3 vDir;
   float hash(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
   void main() {
@@ -226,7 +229,10 @@ const skyFrag = /* GLSLのフラグメントシェーダー */ `
     // 星(地平線近くでは消す)
     float s = hash(floor(vDir * 420.0));
     float star = step(uStarDensity, s) * smoothstep(0.02, 0.2, h);
-    star *= 0.5 + 0.5 * sin(uTime * (1.0 + s * 5.0) + s * 100.0);
+    // 星ごとに周期と位相をずらし、消えない明るさの範囲でゆっくり瞬かせる
+    float seed = hash(floor(vDir * 420.0) + vec3(17.3, 43.7, 9.1));
+    float wave = 0.5 + 0.5 * sin(uTime * (uStarTwinkleSpeedBase + seed * uStarTwinkleSpeedRange) + seed * 6.2831853);
+    star *= 1.0 - uStarTwinkleDepth * wave;
     c += vec3(star) * uStarBrightness;
     gl_FragColor = vec4(c, 1.0);
   }
@@ -348,6 +354,9 @@ export function createNightFlight(container, { imageUrl, onReady, onTelemetry, l
         uZenith: { value: vec3(L.sky.zenith) },
         uStarDensity: { value: L.sky.starDensity },
         uStarBrightness: { value: L.sky.starBrightness },
+        uStarTwinkleDepth: { value: L.sky.twinkle.depth },
+        uStarTwinkleSpeedBase: { value: L.sky.twinkle.speedBase },
+        uStarTwinkleSpeedRange: { value: L.sky.twinkle.speedRange },
       },
     }),
   )
