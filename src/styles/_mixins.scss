@@ -23,7 +23,7 @@
 }
 
 // 計器風のラベル文字
-@mixin label($size: $font-size-sm, $tracking: $tracking-default) {
+@mixin label($size: var(--font-size-sm), $tracking: $tracking-default) {
   font-family: $font-mono;
   font-size: $size;
   letter-spacing: $tracking;

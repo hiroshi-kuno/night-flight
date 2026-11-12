@@ -3,9 +3,12 @@
 // ブロック: loader
 .loader {
   @include overlay(loader);
-  @include label($font-size-md, $tracking-wide);
+  @include label(var(--font-size-md), $tracking-wide);
   display: grid;
   place-items: center;
+  padding: $space-3;
+  text-align: center;
+  line-height: 1.5;
   color: $text-default;
   background: $color-black;
   transition: opacity $duration-fade $ease-out;

@@ -1,6 +1,7 @@
 // 共通スタイル: リセットと文書全体の初期設定を定義する。
 // 各コンポーネントのスタイルは同じディレクトリに置く（BEMのブロック単位）。
 @use '@/styles' as *;
+@use 'sass:map';
 
 *,
 *::before,
@@ -9,6 +10,23 @@
 }
 
 :root {
+  // 各コンポーネントで共有し、画面幅に応じて切り替える文字サイズ。
+  @each $name, $size in map.get($font-sizes, base) {
+    --font-size-#{$name}: #{$size};
+  }
+
+  @include up(sm) {
+    @each $name, $size in map.get($font-sizes, sm) {
+      --font-size-#{$name}: #{$size};
+    }
+  }
+
+  @include up(md) {
+    @each $name, $size in map.get($font-sizes, md) {
+      --font-size-#{$name}: #{$size};
+    }
+  }
+
   --color-text: #{$text-default};
   --color-text-strong: #{$text-strong};
 
